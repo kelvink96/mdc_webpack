@@ -1,3 +1,6 @@
+const autoprefixer = require('autoprefixer');
+
+// autoprefixer and postcss dependencies are for vendor specific styles
 module.exports = [{
     entry: './app.sass',
     output: {
@@ -22,8 +25,21 @@ module.exports = [{
                     {
                         loader: 'css-loader'
                     },
+                    // configs for vendor specific styles
                     {
-                        loader: 'sass-loader'
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: () => [autoprefixer()]
+                        }
+                    },
+                    {
+                        loader: 'sass-loader',
+                        // include mdc components
+                        options: {
+                            sassOptions: {
+                                includePaths: ['./node_modules']
+                            }
+                        }
                     }
                 ]
             }
