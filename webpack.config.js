@@ -2,11 +2,11 @@ const autoprefixer = require('autoprefixer');
 
 // autoprefixer and postcss dependencies are for vendor specific styles
 module.exports = [{
-    entry: './app.sass',
+    entry: ['./app.sass', './app.js'],
     output: {
         // This is necessary for webpack to compile
         // But we never use style-bundle.js
-        filename: 'style-bundle.js',
+        filename: 'bundle.js',
     },
     module: {
         rules: [
@@ -40,9 +40,16 @@ module.exports = [{
                                 includePaths: ['./node_modules']
                             }
                         }
-                    }
+                    },
                 ]
-            }
+            },
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                query: {
+                    presets: ['@babel/preset-env']
+                }
+            },
         ]
     },
 }];
